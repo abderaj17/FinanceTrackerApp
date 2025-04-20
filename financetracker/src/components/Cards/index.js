@@ -11,6 +11,14 @@ const Cards = () => {
                <p>Rs-0</p>
                <Button text="Reset Balance" blue={true}/>
                 </Card>
+            <Card className="my-card" title="Current Balance">
+               <p>Rs-0</p>
+               <Button text="Reset Balance" blue={true}/>
+                </Card>
+            <Card className="my-card" title="Current Balance">
+               <p>Rs-0</p>
+               <Button text="Reset Balance" blue={true}/>
+                </Card>
         </Row>
     </div>
   )
