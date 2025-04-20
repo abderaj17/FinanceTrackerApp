@@ -1,6 +1,6 @@
 .my-card{
     box-shadow:var(--shadow) ;
-    margin: 2rem;
+    margin: 1rem;
     border-radius: 0.5rem;
     min-width: 400px;
     flex: 1;
@@ -19,5 +19,5 @@
 }
 .ant-card-head-title{
     margin: 0 !important;
-    font-weight: 600;
+    font-weight: 400;
 }
