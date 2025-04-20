@@ -10,4 +10,4 @@ const Button = ({text, onClick, blue, disabled}) => {
   )
 }
 
-export default Button
+export default Button;
