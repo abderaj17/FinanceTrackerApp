@@ -86,3 +86,4 @@ const AddExpenseModal = ({isExpenseModalVisible, handleExpenseCancel, onFinish,}
 }
 
 export default AddExpenseModal;
+
