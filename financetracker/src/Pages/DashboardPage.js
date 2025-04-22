@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cards from "../components/Cards";
 import Header from "../components/Header";
 // import { Modal } from "antd";
+import {toast} from 'react-toastify';
+import moment from 'moment';
 import {useAuthState} from "react-firebase-hooks/auth";
-import {addDoc, collection} from "firebase/firestore"
+import {addDoc,query, getDocs, collection} from "firebase/firestore"
 import {auth, db} from "../firbase";
 import AddExpenseModal from "../components/Modals/addExpense";
 import AddIncomeModal from "../components/Modals/addIncome";
 
 const DashboardPage = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [user] = useAuthState(auth);
   const [isExpenseModalVisible, setIsExpenseModalVisible] = useState(false);
   const [isIncomeModalVisible, setIsIncomeModalVisible] = useState(false);
@@ -53,9 +57,33 @@ const DashboardPage = () => {
 
     }
   }
+
+  useEffect(() => {
+    //get all docs from a collection
+    fetchTransaction();
+  }, []);
+
+  async function fetchTransaction() {
+    setLoading(true);
+    if(user){
+      const  q = query(collection(db, `users/${user.uid}/transactions`));
+      const querySnapshot = await getDocs(q);
+      let transactionsArray = [];
+      querySnapshot.forEach((doc) => {
+        transactionsArray.push(doc.data());
+      });
+      setTransactions(transactionsArray);
+      toast.success("Transactions Fetched!");
+    };
+    setLoading(false);
+  }
   return (
     <div>
       <Header />
+
+      {loading ? (<p>Loading...</p>
+      ):(
+        <>
       <Cards
         showExpenseModal={showExpenseModal}
         showIncomeModal={showIncomeModal}
@@ -68,9 +96,10 @@ const DashboardPage = () => {
       />
       <AddIncomeModal 
       isIncomeModalVisible={isIncomeModalVisible}
-      handleExpenseCancel={handleIncomeCancel}
+      handleIncomeCancel={handleIncomeCancel}
       onFinish={onFinish}
       />
+        </>)}
     </div>
   );
 };
