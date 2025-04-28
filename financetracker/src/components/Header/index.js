@@ -38,8 +38,8 @@ const Header = () => {
         <p style={{ marginLeft: "auto", fontSize: "14px" }}>Loading...</p>
       </div>
     );
-  }
-
+  };
+  
   return (
     <div className="navbar">
       <p className="logo">Financely.</p>
