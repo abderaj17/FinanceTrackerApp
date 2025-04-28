@@ -38,19 +38,7 @@ const TransactionsTable = ({ transactions }) => {
   });
 
   return (
-    <div
-    style={{
-      width: "90vw",
-      padding: "0rem 2rem",
-    }}
-    >
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "1rem",
-        alignItems: "center",
-        marginBottom: "1rem",
-      }}>
+   
       <div className="input-flex">
         <img src={"https://tse1.mm.bing.net/th/id/OIP.Wg7d9py54h7ViyCEq60PcgHaHa?rs=1&pid=ImgDetMain"} 
         width="16" alt=""
