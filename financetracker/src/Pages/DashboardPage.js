@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cards from "../components/Cards";
 import Header from "../components/Header";
-// import { Modal } from "antd";
 import {toast} from 'react-toastify';
 import moment from 'moment';
 import {useAuthState} from "react-firebase-hooks/auth";
@@ -9,6 +8,7 @@ import {addDoc,query, getDocs, collection} from "firebase/firestore"
 import {auth, db} from "../firbase";
 import AddExpenseModal from "../components/Modals/addExpense";
 import AddIncomeModal from "../components/Modals/addIncome";
+import TransactionsTable from "../components/TransactionsTable";
 
 const DashboardPage = () => {
   const [transactions, setTransactions] = useState([]);
@@ -16,6 +16,9 @@ const DashboardPage = () => {
   const [user] = useAuthState(auth);
   const [isExpenseModalVisible, setIsExpenseModalVisible] = useState(false);
   const [isIncomeModalVisible, setIsIncomeModalVisible] = useState(false);
+  const [income, setIncome] = useState(0);
+  const [expense, setExpense] = useState(0);
+  const [totalBalance, setTotalBalance] = useState(0);
 
   const showExpenseModal = () => {
     setIsExpenseModalVisible(true);
@@ -33,7 +36,7 @@ const DashboardPage = () => {
   const onFinish = (values, type) => {
    const newTransaction= {
     type:type,
-    date:moment(values.date).format("YYYY-MM-DD"),
+    date: values.date ? values.date.toISOString() : new Date().toISOString(),
     amount: parseFloat(values.amount),
     tag: values.tag,
     name: values.name,
@@ -45,12 +48,18 @@ const DashboardPage = () => {
     // Logic to add transaction to the state or database
     try {
       const docRef = await addDoc(
-        collection(db, `users/${user.uid}/transaction`),
+        collection(db, `users/${user.uid}/transactions`),
         transaction
       );
       console.log("Document written with ID: ", docRef.id);
 
       toast.success("Transaction Added!");
+      // await fetchTransaction();
+      // let newArr = transactions;
+      // newArr.push(transaction);
+      // setTransactions(newArr);
+      setTransactions((prev) => [...prev, transaction]);
+      calculateBalance();
     } catch (e) {
       console.error("Error adding document:" , e);
         toast.error("Couldn't add transaction");
@@ -60,8 +69,35 @@ const DashboardPage = () => {
 
   useEffect(() => {
     //get all docs from a collection
+    if(user){
     fetchTransaction();
-  }, []);
+    }
+  }, [user]);
+
+useEffect(() => {
+  calculateBalance();
+}, [transactions]);
+
+  function calculateBalance(){
+    if(!transactions || transactions.length === 0){
+    setIncome(0);
+    setExpense(0);
+    setTotalBalance(0);
+    return;
+    }
+let incomeTotal = 0;
+let exprenseTotal = 0;
+ transactions.forEach((transaction) => {
+  if(transaction.type === 'income'){
+    incomeTotal += transaction.amount;
+  }else{
+    exprenseTotal += transaction.amount;
+  }
+ });
+ setIncome(incomeTotal);
+ setExpense(exprenseTotal);
+ setTotalBalance(incomeTotal - exprenseTotal);
+  }
 
   async function fetchTransaction() {
     setLoading(true);
@@ -85,6 +121,9 @@ const DashboardPage = () => {
       ):(
         <>
       <Cards
+        income={income}
+        expense={expense}
+        totalBalance={totalBalance}
         showExpenseModal={showExpenseModal}
         showIncomeModal={showIncomeModal}
       />
@@ -99,6 +138,7 @@ const DashboardPage = () => {
       handleIncomeCancel={handleIncomeCancel}
       onFinish={onFinish}
       />
+      <TransactionsTable transactions={transactions} />
         </>)}
     </div>
   );

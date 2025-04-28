@@ -56,7 +56,7 @@ const AddIncomeModal = ({
           rules={[
             {
               required: true,
-              message: "Please select the expense date!",
+              message: "Please select the income date!",
             },
           ]}
         >
