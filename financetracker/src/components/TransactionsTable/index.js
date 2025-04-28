@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Select, Radio } from "antd";
-import search from "../../assets/search.svg";
+// import search from "../../assets/search.svg";
 
 const TransactionsTable = ({ transactions }) => {
   const { Option } = Select;
@@ -38,16 +38,27 @@ const TransactionsTable = ({ transactions }) => {
   });
 
   return (
-    <div>
-      <h1>Transactions</h1>
+    <div
+    style={{
+      width: "90vw",
+      padding: "0rem 2rem",
+    }}
+    >
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "1rem",
+        alignItems: "center",
+        marginBottom: "1rem",
+      }}>
       <div className="input-flex">
-        <img src={search.svg} 
+        <img src={"https://tse1.mm.bing.net/th/id/OIP.Wg7d9py54h7ViyCEq60PcgHaHa?rs=1&pid=ImgDetMain"} 
         width="16" alt=""
         />
          <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search by name"
+        placeholder="Search by Name"
       />
         </div>
      
@@ -77,6 +88,7 @@ const TransactionsTable = ({ transactions }) => {
         columns={columns}
         rowKey={(record, index) => index}
       />
+    </div>
     </div>
   );
 };
