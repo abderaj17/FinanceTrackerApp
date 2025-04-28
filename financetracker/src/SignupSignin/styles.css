@@ -1,20 +1,58 @@
-.signup-wrapper{
-     width: 70%;
-     max-width: 400px;
-     height: auto;
-     box-shadow: var(--shadow);
-     border-radius: 1rem;
-     padding:1rem 1.5rem;
-}
-.title{
-    font-weight: 500;
-    font-size: 1.2rem;
+.signup-wrapper {
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    box-shadow: var(--shadow);
+    border-radius: 1rem;
+    padding: 2rem;
+    background-color: #fff;
+    margin: 2rem auto;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .title {
+    font-weight: 600;
+    font-size: 1.5rem;
     text-align: center;
-}
-.p-login{
+    margin-bottom: 1.5rem;
+  }
+  
+  .p-login {
     text-align: center;
-    margin: 0;
-    font-weight: 300;
+    margin-top: 1rem;
+    font-weight: 400;
     font-size: 1rem;
+    color: #555;
     cursor: pointer;
-}
+    transition: color 0.3s ease;
+  }
+  
+  .p-login:hover {
+    color: var(--theme);
+  }
+  
+  /* Add Loading Spinner Style */
+  .button-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .button-loading::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-top-color: var(--theme);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  
+  /* Keyframes for spinner */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

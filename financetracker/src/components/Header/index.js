@@ -39,13 +39,13 @@ const Header = () => {
       </div>
     );
   };
-  
+
   return (
     <div className="navbar">
       <p className="logo">Financely.</p>
 
       {user && (
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
           <img
             src={
               user?.photoURL
