@@ -44,7 +44,7 @@ const DashboardPage = () => {
    addTransaction(newTransaction);
   }
 
-  async function  addTransaction(transaction) {
+  async function  addTransaction(transaction, many) {
     // Logic to add transaction to the state or database
     try {
       const docRef = await addDoc(
@@ -53,16 +53,13 @@ const DashboardPage = () => {
       );
       console.log("Document written with ID: ", docRef.id);
 
-      toast.success("Transaction Added!");
-      // await fetchTransaction();
-      // let newArr = transactions;
-      // newArr.push(transaction);
-      // setTransactions(newArr);
+      if(!many) toast.success("Transaction Added!");
+     
       setTransactions((prev) => [...prev, transaction]);
       calculateBalance();
     } catch (e) {
       console.error("Error adding document:" , e);
-        toast.error("Couldn't add transaction");
+      if(!many)  toast.error("Couldn't add transaction");
 
     }
   }
@@ -138,7 +135,9 @@ let exprenseTotal = 0;
       handleIncomeCancel={handleIncomeCancel}
       onFinish={onFinish}
       />
-      <TransactionsTable transactions={transactions} />
+      <TransactionsTable transactions={transactions} addTransaction={addTransaction} 
+      fetchTransaction={fetchTransaction}
+      />
         </>)}
     </div>
   );

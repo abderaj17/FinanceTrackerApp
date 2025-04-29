@@ -1,8 +1,10 @@
 import React from "react";
 import { Table, Select, Radio, Button } from "antd";
 import { UploadOutlined, DownloadOutlined } from "@ant-design/icons";
+import { unparse, parse } from "papaparse"; // Import the unparse function from papaparse
+import { toast } from "react-toastify";
 
-const TransactionsTable = ({ transactions }) => {
+const TransactionsTable = ({ transactions, addTransaction, fetchTransaction }) => {
   const { Option } = Select;
   const [search, setSearch] = React.useState("");
   const [sortKey, setSortKey] = React.useState("");
@@ -36,6 +38,49 @@ const TransactionsTable = ({ transactions }) => {
       return 0;
     }
   });
+
+  function exportCSv(){
+    var csv = unparse({
+      fields: ["name", "type", "tag", "date", "amount"],
+      data: transactions,
+    });
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href= url;
+    link.download = "transactions.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function importFromCsv(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+  
+    parse(file, {
+      header: true,
+      complete: async function (results) {
+        try {
+          for (const transaction of results.data) {
+            const newTransaction = {
+              ...transaction,
+              amount: parseFloat(transaction.amount),
+            };
+            await addTransaction(newTransaction, true);
+          }
+          toast.success("All Transactions Added");
+          fetchTransaction();
+        } catch (e) {
+          toast.error("Failed to import: " + e.message);
+        }
+      },
+    });
+  
+    // Clear file input value so same file can be uploaded again
+    event.target.value = null;
+  }
+  
 
   return (
     <div>
@@ -94,18 +139,28 @@ const TransactionsTable = ({ transactions }) => {
           </div>
 
           {/* Import CSV */}
-          <Button
-            icon={<UploadOutlined />}
-            style={{
-              backgroundColor: "#1890ff",
-              color: "#fff",
-              border: "none",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            Import CSV
-          </Button>
+          <input
+  type="file"
+  accept=".csv"
+  onChange={importFromCsv}
+  ref={(ref) => (window.fileInput = ref)}
+  style={{ display: "none" }}
+/>
+
+<Button
+  icon={<UploadOutlined />}
+  style={{
+    backgroundColor: "#1890ff",
+    color: "#fff",
+    border: "none",
+    display: "flex",
+    alignItems: "center",
+  }}
+  onClick={() => window.fileInput && window.fileInput.click()}
+>
+  Import CSV
+</Button>
+
 
           {/* Export CSV */}
           <Button
@@ -117,6 +172,7 @@ const TransactionsTable = ({ transactions }) => {
               display: "flex",
               alignItems: "center",
             }}
+            onClick={exportCSv}
           >
             Export CSV
           </Button>
