@@ -52,7 +52,7 @@ const TransactionsTable = ({ transactions, addTransaction, fetchTransaction }) =
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
+  };
 
   function importFromCsv(event) {
     const file = event.target.files[0];
