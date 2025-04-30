@@ -9,7 +9,7 @@ import { auth, db } from "../firbase";
 import AddExpenseModal from "../components/Modals/addExpense";
 import AddIncomeModal from "../components/Modals/addIncome";
 import TransactionsTable from "../components/TransactionsTable";
-import NoTransactions from "../components/NoTransactions/index";
+import NoTransactions from "../components/NoTransactions";
 
 
 
