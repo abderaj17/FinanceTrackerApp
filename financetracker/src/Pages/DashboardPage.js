@@ -9,7 +9,7 @@ import { auth, db } from "../firbase";
 import AddExpenseModal from "../components/Modals/addExpense";
 import AddIncomeModal from "../components/Modals/addIncome";
 import TransactionsTable from "../components/TransactionsTable";
-import NoTransactions from "../components/NoTransactions";
+// import NoTransactions from "../components/NoTransactions";
 
 
 
@@ -108,7 +108,7 @@ const DashboardPage = () => {
           {transactions.length !== 0 ? (
             <ChartComponent />
           ) : (
-            <NoTransactions />
+           ""
           )}
 
           <AddExpenseModal
