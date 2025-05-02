@@ -13,6 +13,7 @@ const ChartComponent = () => {
         data,
         width: 600,
         height: 300,
+        autoFit: false,
         xField: 'year',
         yField: 'value',
         point: {

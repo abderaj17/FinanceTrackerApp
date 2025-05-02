@@ -10,6 +10,7 @@ import AddExpenseModal from "../components/Modals/addExpense";
 import AddIncomeModal from "../components/Modals/addIncome";
 import TransactionsTable from "../components/TransactionsTable";
 // import NoTransactions from "../components/NoTransactions";
+import NoTransactions from './../components/NoTransactions.js/index';
 
 
 
@@ -105,11 +106,7 @@ const DashboardPage = () => {
             showIncomeModal={showIncomeModal}
           />
 
-          {transactions.length !== 0 ? (
-            <ChartComponent />
-          ) : (
-           ""
-          )}
+         {transactions.length !== 0 ? <ChartComponent /> : <NoTransactions />}
 
           <AddExpenseModal
             isExpenseModalVisible={isExpenseModalVisible}
