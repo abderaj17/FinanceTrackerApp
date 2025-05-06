@@ -4,7 +4,7 @@ import { UploadOutlined, DownloadOutlined } from "@ant-design/icons";
 import { unparse, parse } from "papaparse"; // Import the unparse function from papaparse
 import { toast } from "react-toastify";
 
-const TransactionsTable = ({ transactions, addTransaction, fetchTransaction }) => {
+const TransactionsTable = ({ transactions, addTransaction, fetchTransactions }) => {
   const { Option } = Select;
   const [search, setSearch] = React.useState("");
   const [sortKey, setSortKey] = React.useState("");
@@ -70,7 +70,7 @@ const TransactionsTable = ({ transactions, addTransaction, fetchTransaction }) =
             await addTransaction(newTransaction, true);
           }
           toast.success("All Transactions Added");
-          fetchTransaction();
+          fetchTransactions();
         } catch (e) {
           toast.error("Failed to import: " + e.message);
         }
