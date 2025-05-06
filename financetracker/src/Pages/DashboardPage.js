@@ -48,7 +48,7 @@ const DashboardPage = () => {
       );
       if (!many) toast.success("Transaction Added!");
       setTransactions((prev) => [...prev, transaction]);
-      calculateBalance([...transactions, transaction]);
+      // calculateBalance([...transactions, transaction]);
     } catch (e) {
       console.error("Error adding document:", e);
       if (!many) toast.error("Couldn't add transaction");
@@ -90,6 +90,10 @@ const DashboardPage = () => {
       fetchTransactions();
     }
   }, [user]);
+
+  useEffect(() => {
+    calculateBalance(transactions);
+  }, [transactions]);
 
   return (
     <div>
