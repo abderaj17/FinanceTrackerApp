@@ -3,7 +3,7 @@ import {Button, Modal, Form, Input, DatePicker, Select} from "antd";
 
 
 const AddExpenseModal = ({isExpenseModalVisible, handleExpenseCancel, onFinish,}) => {
-    const [form] = Form.useForm();
+     const [form] = Form.useForm();
   return (
    <Modal
    style={{fontWeight: 600}}
