@@ -62,6 +62,7 @@ const DashboardPage = () => {
       const querySnapshot = await getDocs(q);
       const transactionsArray = querySnapshot.docs.map((doc) => doc.data());
       setTransactions(transactionsArray);
+      calculateBalance(transactionsArray);
       toast.success("Transactions Fetched!");
     } catch (e) {
       toast.error("Failed to fetch transactions");
@@ -91,9 +92,9 @@ const DashboardPage = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    calculateBalance(transactions);
-  }, [transactions]);
+  // useEffect(() => {
+  //   calculateBalance(transactions);
+  // }, [transactions]);
 
   return (
     <div>
