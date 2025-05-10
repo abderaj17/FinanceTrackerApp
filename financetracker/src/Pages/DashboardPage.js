@@ -110,8 +110,6 @@ const DashboardPage = () => {
             showIncomeModal={showIncomeModal}
           />
 
-         {transactions.length !== 0 ? <ChartComponent /> : <NoTransactions />}
-
           <AddExpenseModal
             isExpenseModalVisible={isExpenseModalVisible}
             handleExpenseCancel={handleExpenseCancel}
